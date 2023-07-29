@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System.Text.Json.Serialization;
 
 namespace Postit.Models
 {
     public class Post
     {
         [Required]
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-        public string? Title { get; set; }
+
+        [BsonElement("Title")]
+        [JsonPropertyName("Title")]
+        public string? Title { get; set; } = null;
         [Required]
-        public string Message { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime PostedOn { get; set; }
+        public string Message { get; set; } = null;
     }
 }

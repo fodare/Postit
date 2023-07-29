@@ -1,14 +1,15 @@
-﻿@{
+﻿@model IEnumerable<Postit.Models.Post>
+@{
    ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-   <h1 class="display-4">Index view from the view controller!</h1>
-   <p>
-      Learn about
-      <a href="https://docs.microsoft.com/aspnet/core"
-         >building Web apps with ASP.NET Core</a
-      >.
-   </p>
+<div class="">
+   <h1 class="display-4">Posts</h1>
+   <ul>
+      @foreach (var item in Model)
+      {
+         <li>@item.Message</li>
+      }
+   </ul>
 </div>
 

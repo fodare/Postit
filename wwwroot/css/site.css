@@ -15,4 +15,25 @@ html {
 
 body {
   margin-bottom: 60px;
+  /* background-color: var(--default-bc-color); */
+  font-family: 'Roboto Mono', monospace;
+  color: var(--text-color);
 }
+
+/* Colors */
+:root{
+  --orange: #ff7e22;
+  --yellow: #fca62a;
+  --pink: #f57ad0;
+  --purple: #673ece;
+  --indigo: #5a43f1;
+  --indigo-dark: #4509cf;
+  --indigo-light: #969bf6;
+  --indigo-muted: #f1f2fd;
+  --default-bc-color: #1c1e24;
+  --text-color:#8599a9
+}
+
+/* .nav{
+  background-color: var(--default-bc-color)!important;
+} */
