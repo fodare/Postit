@@ -6,4 +6,22 @@
 <div class="">
    <h1 class="display-4">Create new post</h1>
    <hr>
+   @if(ViewData["errorMessage"] != null){
+      <p class="text-danger">@ViewData["errorMessage"]</p>
+   }
+   <form enctype="multipart/form-data" asp-action="Create">
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <div class="mb-3">
+         <label class="form-label">@Html.DisplayNameFor(Model => Model.Title)</label>
+         <input type="text" required class="form-control" asp-for="Title"
+         placeholder="Enter post title...">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">@Html.DisplayNameFor(Model => Model.Message)</label>
+        <textarea class="form-control" required asp-for="Message"
+        placeholder="Enter your message here..." rows="2"></textarea>
+      </div>
+      <input type="submit" value="Save" class="btn btn-primary mb-3"/>
+   </form>
 </div>
