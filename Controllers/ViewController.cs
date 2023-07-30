@@ -32,15 +32,9 @@ namespace Postit.Controllers
             return View(post);
         }
 
-        // Get the privacy view
-        public IActionResult Privacy()
+        // Get the Create View
+        public async Task<IActionResult> Create()
         {
-            return View();
-        }
-        // Get the about page
-        public IActionResult Welcome(string name = "user", int Id = 1)
-        {
-            ViewData["message"] = $"Hello {name}. You've searched content  with id: {Id}!";
             return View();
         }
 
