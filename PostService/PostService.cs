@@ -25,9 +25,10 @@ namespace Postit.PostService
                 postDatabaseSettings.Value.PostCollectionName
             );
         }
-        public Task CreatePostAsync(Post newPost)
+
+        public async Task CreatePostAsync(Post newPost)
         {
-            throw new NotImplementedException();
+            await _postsCollection.InsertOneAsync(newPost);
         }
 
         public Task<Post?> GetPostAsync(string id)

@@ -32,16 +32,26 @@ namespace Postit.Controllers
             return View(post);
         }
 
-        // Get the privacy view
-        public IActionResult Privacy()
+        // Get the Create View
+        public async Task<IActionResult> Create()
         {
             return View();
         }
-        // Get the about page
-        public IActionResult Welcome(string name = "user", int Id = 1)
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Title", "Message")] Post newpost)
         {
-            ViewData["message"] = $"Hello {name}. You've searched content  with id: {Id}!";
-            return View();
+            try
+            {
+                await _postService.CreatePostAsync(newpost);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ViewData["errorMessage"] = $"Error saving message to db. Error message. {ex.Message}";
+            }
+            return View(newpost);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

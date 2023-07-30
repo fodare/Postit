@@ -11,12 +11,12 @@ namespace Postit.Models
 {
     public class Post
     {
-        [Required]
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         [BsonElement("Title")]
+        [Required]
         [JsonPropertyName("Title")]
         public string? Title { get; set; } = null;
         [Required]

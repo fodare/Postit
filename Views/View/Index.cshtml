@@ -1,15 +1,32 @@
 ﻿@model IEnumerable<Postit.Models.Post>
 @{
-   ViewData["Title"] = "Home Page";
+   ViewData["Title"] = "Home";
 }
 
 <div class="">
    <h1 class="display-4">Posts</h1>
-   <ul>
-      @foreach (var item in Model)
-      {
-         <li>@item.Message</li>
-      }
-   </ul>
+   
+   <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">@Html.DisplayNameFor(Model => Model.Title)</th>
+      <th scope="col">@Html.DisplayNameFor(Model => Model.Message)</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+   @foreach (var item in Model )
+   { 
+      <tr>
+      <td>@Html.DisplayFor(modelItem => item.Title)</td>
+      <td>@Html.DisplayFor(modelitem => item.Message)</td>
+      <td>
+         <a asp-action="Copy" asp-route-id="@item.Id">Copy</a> |
+         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+         <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+      </td>
+    </tr>
+   }
+  </tbody>
+</table>
 </div>
-
