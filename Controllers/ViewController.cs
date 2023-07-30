@@ -38,6 +38,22 @@ namespace Postit.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Title", "Message")] Post newpost)
+        {
+            try
+            {
+                await _postService.CreatePostAsync(newpost);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ViewData["errorMessage"] = $"Error saving message to db. Error message. {ex.Message}";
+            }
+            return View(newpost);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
