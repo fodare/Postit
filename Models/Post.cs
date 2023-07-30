@@ -16,6 +16,7 @@ namespace Postit.Models
         public string? Id { get; set; }
 
         [BsonElement("Title")]
+        [Required]
         [JsonPropertyName("Title")]
         public string? Title { get; set; } = null;
         [Required]
