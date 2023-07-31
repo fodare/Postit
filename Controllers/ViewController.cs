@@ -24,13 +24,21 @@ namespace Postit.Controllers
         // Get home view
         public async Task<IActionResult> Index()
         {
-            var post = await _postService.GetPostsAsync();
-            if (post == null)
+            try
             {
-                ViewData["errorMessage"] = $"Error reading posts from the DB!";
+                var post = await _postService.GetPostsAsync();
+                _logger.LogInformation("{post}", post.ToString());
+                if (post == null)
+                {
+                    ViewData["errorMessage"] = "DB empty. Please create entries!";
+                }
+                return View(post);
+            }
+            catch (Exception ex)
+            {
+                ViewData["errorMessage"] = "Error retriving posts from db or DB empty.";
                 return View();
             }
-            return View(post);
         }
 
         // Get the Create View
@@ -79,7 +87,7 @@ namespace Postit.Controllers
         // Post Edit view
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, Post updatedPost)
+        public async Task<IActionResult> Edit(string id, [Bind("Title", "Message")] Post updatedPost)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -97,6 +105,49 @@ namespace Postit.Controllers
             }
             return View();
         }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                ViewData["errorMessage"] = "Invalid post id!";
+                return View();
+            }
+            try
+            {
+                var qureiedPost = await _postService.GetPostAsync(id);
+                return View(qureiedPost);
+
+            }
+            catch (Exception ex)
+            {
+                ViewData["errorMessage"] = $"Error fetching post with id {id} from the db!";
+                return View();
+            }
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                ViewData["errorMessage"] = "Missing or invalid post id!";
+                return RedirectToAction("Index");
+            }
+            try
+            {
+                await _postService.RemovePostAsync(id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewData["errorMessage"] = $"Error removing post with id {id} from db!";
+                return View();
+            }
+        }
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
