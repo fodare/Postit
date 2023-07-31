@@ -48,9 +48,9 @@ namespace Postit.PostService
             throw new NotImplementedException();
         }
 
-        public Task UpdatePostAsync(string id, Post updatedPost)
+        public async Task UpdatePostAsync(string id, Post updatedPost)
         {
-            throw new NotImplementedException();
+            await _postsCollection.ReplaceOneAsync(x => x.Id == id, updatedPost);
         }
     }
 }

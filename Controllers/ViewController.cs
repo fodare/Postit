@@ -76,6 +76,28 @@ namespace Postit.Controllers
             }
         }
 
+        // Post Edit view
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(string id, Post updatedPost)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                ViewData["errorMessage"] = $"Post id invalid!";
+                return View();
+            }
+            try
+            {
+                await _postService.UpdatePostAsync(id, updatedPost);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewData["errorMessage"] = $"Error while saving post to DB.";
+            }
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
