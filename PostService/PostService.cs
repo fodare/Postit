@@ -43,9 +43,9 @@ namespace Postit.PostService
             return posts;
         }
 
-        public Task RemovePostAsync(string Id)
+        public async Task RemovePostAsync(string Id)
         {
-            throw new NotImplementedException();
+            await _postsCollection.DeleteOneAsync(x => x.Id == Id);
         }
 
         public async Task UpdatePostAsync(string id, Post updatedPost)
