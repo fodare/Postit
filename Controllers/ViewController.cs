@@ -55,6 +55,27 @@ namespace Postit.Controllers
             return View(newpost);
         }
 
+        // GET Edit view
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                ViewData["errorMEssage"] = "Invlaid post id.";
+                return View();
+            }
+            try
+            {
+                var queridPost = await _postService.GetPostAsync(id);
+                return View(queridPost);
+            }
+            catch (Exception ex)
+            {
+                ViewData["errorMessage"] = $"Error retriving post with id {id} from db.";
+                return View();
+            }
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
