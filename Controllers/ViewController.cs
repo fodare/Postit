@@ -24,13 +24,21 @@ namespace Postit.Controllers
         // Get home view
         public async Task<IActionResult> Index()
         {
-            var post = await _postService.GetPostsAsync();
-            if (post == null)
+            try
             {
-                ViewData["errorMessage"] = $"Error reading posts from the DB!";
+                var post = await _postService.GetPostsAsync();
+                _logger.LogInformation("{post}", post.ToString());
+                if (post == null)
+                {
+                    ViewData["errorMessage"] = "DB empty. Please create entries!";
+                }
+                return View(post);
+            }
+            catch (Exception ex)
+            {
+                ViewData["errorMessage"] = "Error retriving posts from db or DB empty.";
                 return View();
             }
-            return View(post);
         }
 
         // Get the Create View
