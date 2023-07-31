@@ -27,7 +27,8 @@ namespace Postit.Controllers
             var post = await _postService.GetPostsAsync();
             if (post == null)
             {
-                return NotFound();
+                ViewData["errorMessage"] = $"Error reading posts from the DB!";
+                return View();
             }
             return View(post);
         }

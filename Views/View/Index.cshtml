@@ -5,7 +5,10 @@
 
 <div class="">
    <h1 class="display-4">Posts</h1>
-   
+   <hr>
+   @if(ViewData["errorMessage"] != null){
+    <p class="text-danger">@ViewData["errorMessage"]</p>
+   }
    <table class="table table-hover">
   <thead>
     <tr>
