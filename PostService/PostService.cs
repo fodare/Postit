@@ -31,9 +31,10 @@ namespace Postit.PostService
             await _postsCollection.InsertOneAsync(newPost);
         }
 
-        public Task<Post?> GetPostAsync(string id)
+        public async Task<Post?> GetPostAsync(string id)
         {
-            throw new NotImplementedException();
+            var post = await _postsCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
+            return (Post?)post;
         }
 
         public async Task<List<Post>> GetPostsAsync()
@@ -47,9 +48,9 @@ namespace Postit.PostService
             throw new NotImplementedException();
         }
 
-        public Task UpdatePostAsync(string id, Post updatedPost)
+        public async Task UpdatePostAsync(string id, Post updatedPost)
         {
-            throw new NotImplementedException();
+            await _postsCollection.ReplaceOneAsync(x => x.Id == id, updatedPost);
         }
     }
 }

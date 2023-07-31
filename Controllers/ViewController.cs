@@ -27,7 +27,8 @@ namespace Postit.Controllers
             var post = await _postService.GetPostsAsync();
             if (post == null)
             {
-                return NotFound();
+                ViewData["errorMessage"] = $"Error reading posts from the DB!";
+                return View();
             }
             return View(post);
         }
@@ -52,6 +53,49 @@ namespace Postit.Controllers
                 ViewData["errorMessage"] = $"Error saving message to db. Error message. {ex.Message}";
             }
             return View(newpost);
+        }
+
+        // GET Edit view
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                ViewData["errorMEssage"] = "Invlaid post id.";
+                return View();
+            }
+            try
+            {
+                var queridPost = await _postService.GetPostAsync(id);
+                return View(queridPost);
+            }
+            catch (Exception ex)
+            {
+                ViewData["errorMessage"] = $"Error retriving post with id {id} from db.";
+                return View();
+            }
+        }
+
+        // Post Edit view
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(string id, Post updatedPost)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                ViewData["errorMessage"] = $"Post id invalid!";
+                return View();
+            }
+            try
+            {
+                await _postService.UpdatePostAsync(id, updatedPost);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewData["errorMessage"] = $"Error while saving post to DB.";
+            }
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

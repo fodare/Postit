@@ -1,0 +1,27 @@
+@model Postit.Models.Post
+@{
+   ViewData["Title"] = "Edit";
+}
+
+<div class="">
+   <h1 class="display-4">Edit</h1>
+   <hr>
+   @if(ViewData["errorMEssage"] != null){
+    <p class="text-danger">@ViewData["errorMessage"]</p>
+   }
+   <form enctype="multipart/form-data" asp-action="Edit">
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <div class="mb-3">
+         <input type="hidden" asp-for="Id"/>
+         <label class="form-label">@Html.DisplayNameFor(Model => Model.Title)</label>
+         <input type="text" required class="form-control" asp-for="Title" placeholder="Enter post title...">
+        <span asp-validation-for="Title" class="text-danger"></span>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">@Html.DisplayNameFor(Model => Model.Message)</label>
+        <textarea class="form-control" required asp-for="Message" placeholder="Enter your message here..." rows="2"></textarea>
+        <span asp-validation-for="Message" class="text-danger"></span>
+      </div>
+      <input type="submit" value="Edit" class="btn btn-primary mb-3"/>
+   </form>
+</div>
