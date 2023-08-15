@@ -15,9 +15,9 @@ html {
 
 body {
   margin-bottom: 60px;
-  /* background-color: var(--default-bc-color); */
+  background-color: var(--default-bc-color);
   font-family: 'Roboto Mono', monospace;
-  color: var(--text-color);
+  color: var(--indigo-muted);
 }
 
 /* Colors */
@@ -34,6 +34,32 @@ body {
   --text-color:#8599a9
 }
 
-/* .nav{
-  background-color: var(--default-bc-color)!important;
-} */
+/* Nav styling */
+.nav a {
+  color: var(--indigo-muted);
+}
+
+.nav a:hover{
+  color: var(--indigo-muted);
+  border-bottom: 1px solid var(--yellow);
+  
+}
+
+/* Index table styling */
+table{
+  color: var(--indigo-muted) !important;
+}
+
+table tr:hover{
+  color: var(--text-color) !important;
+}
+
+table tr td a{
+  color: var(--indigo-muted);
+  text-decoration: none;
+}
+
+table tr td a:hover{
+  color: var(--indigo-muted);
+  border-bottom: 0.1px solid var(--pink);
+}
