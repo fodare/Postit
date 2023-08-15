@@ -51,7 +51,7 @@ table{
 }
 
 table tr:hover{
-  color: var(--indigo-muted) !important;
+  color: var(--text-color) !important;
 }
 
 table tr td a{
